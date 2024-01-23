@@ -8,6 +8,7 @@ References
 
 
 # Standard libraries
+import importlib
 import json
 from pathlib import Path
 from typing import Any, Literal, Union
@@ -83,7 +84,7 @@ author: str = ", ".join(
 project_copyright: Union[str, list[str]] = meta["copyright"]["notice"]
 """Copyright statement(s)"""
 
-release: str = "1.0.0.b1"  # TODO: Make dynamic
+release: str = importlib.import_module(meta["package"]["import_name"]).__version__
 """Full version, including alpha/beta/rc tags"""
 
 version: str = ".".join(release.split(".")[:3])

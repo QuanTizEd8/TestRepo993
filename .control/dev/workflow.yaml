@@ -22,18 +22,21 @@ init:
   schedule:
     test: '43 23 * * *'  # Every day at 23:43 UTC.
     sync: '43 6 * * 6'  # Every Saturday at 6:43 UTC.
+
   get_owner_publications: false
+
 tool:
   pylint:
     pip_spec:
       - pylint[spelling] >= 3.0, < 4
   mypy:
     pip_spec:
-      - mypy[reports] >= 1.6, < 2
+      - mypy[reports] >= 1.8, < 2
   bandit:
     pip_spec:
       - bandit[toml]
       - bandit-sarif-formatter
+
 pre_commit:
   # pre-commit configuration file
   # Ref: https://pre-commit.com/
@@ -98,15 +101,15 @@ pre_commit:
             # https://github.com/pre-commit/pre-commit-hooks#trailing-whitespace
             stages: [ pre-commit, manual ]
             verbose: true
-      - repo: https://github.com/astral-sh/ruff-pre-commit
-        # Ruff version.
-        rev: v0.1.5
-        hooks:
-          - id: ruff
-            stages: [ pre-commit, manual ]
-            args: [ --fix, --exit-non-zero-on-fix, --config, pyproject.toml ]
-            types_or: [ python, pyi, jupyter ]
-            verbose: true
+#        - repo: https://github.com/astral-sh/ruff-pre-commit
+#          # Ruff version.
+#          rev: v0.1.5
+#          hooks:
+#            - id: ruff
+#              stages: [ pre-commit, manual ]
+#              args: [ --fix, --exit-non-zero-on-fix, --config, pyproject.toml ]
+#              types_or: [ python, pyi, jupyter ]
+#              verbose: true
       - repo: https://github.com/pycqa/isort
         # isort - format imports
         # https://pycqa.github.io/isort/docs/configuration/pre-commit.html

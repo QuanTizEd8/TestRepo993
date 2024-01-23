@@ -1,5 +1,4 @@
 # News
-
 :::{toctree}
 :hidden:
 :glob:

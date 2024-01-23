@@ -11,6 +11,7 @@ html_theme.sidebar_secondary.remove:
 :numbered:
 intro/index
 manual/index
+api/index
 news/index
 contribute/index
 about/index
@@ -102,12 +103,22 @@ that are essential to fully understanding and utilizing {{pp_meta.name}}.
 
 Dive into the user manual for in-depth information on the key concepts of {{pp_meta.name}},
 along with detailed explanations of all its features and functionalities.
-From step-by-step instructions on setting up {{pp_meta.name}} for the first time
-and integrating it into your new or existing project,
-to comprehensive guides on how to use its various features and functionalities
-in your software development process,
+From step-by-step instructions on installing and upgrading {{pp_meta.name}},
+to comprehensive guides on how to use its various features and functionalities,
 the user manual covers everything you need to know
 to fully leverage {{pp_meta.name}}'s capabilities.
+:::
+
+
+:::{card} API: Comprehensive API Reference
+:link: api/index.html
+:img-top: /_static/img/icon/api.svg
+:text-align: center
+:class-img-top: dark-light icon-image
+
+Explore the complete Python package documentation and learn to interact programmatically with {{pp_meta.name}}.
+This section provides a full reference of {{pp_meta.name}}'s application programming interface (API),
+including all its packages, modules, classes, methods, functions, and attributes.
 :::
 
 

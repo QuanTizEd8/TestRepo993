@@ -463,7 +463,7 @@ forms:
     subtype: api
     name: ' 🖥 App 🐞 Bug Report 📱 API'
     description: >-
-      Report a problem (e.g. errors and unexpected results) encountered
+      Report a problem (e.g., errors and unexpected results) encountered
       while using the application's Python API.
     body:
       - type: markdown
@@ -1314,15 +1314,14 @@ forms:
           number: 1
           is_checked: true
       body: |
-        <h2>Feature Location</h2>
-        <ul>
-        <li><b>Package Version</b>: {version}</li>
-        <li><b>Package Interface</b>: {package_interface}</li>
-        <li><b>Operating System</b>: {os}</li>
-        <li><b>Python Version</b>: {python_version}</li>
-        <li><b>Package Manager</b>: {package_manager}</li>
-        </ul>
-        <h2>Request Summary</h2>
+        ### Feature Location
+        - **Package Version**: {version}
+        - **Package Interface**: {package_interface}
+        - **Operating System**: {os}
+        - **Python Version**: {python_version}
+        - **Package Manager**: {package_manager}
+
+        ### Request Summary
 
         {summary}
 
@@ -1430,6 +1429,7 @@ forms:
         attributes:
           value: <h3>🧑‍💻 Collaborate</h3>
       - type: checkboxes
+        id: collab
         attributes:
           label: |
             Thank you again for filling this feature request.
@@ -1473,7 +1473,7 @@ forms:
           multiple: false
           options: ${{ package.releases.package_managers }}
         validations:
-          required: true
+          required: false
       - type: markdown
         attributes:
           value: |
@@ -1511,6 +1511,23 @@ forms:
         #            placeholder: Tell us what you see!
         validations:
           required: true
+    post_process:
+      assign_creator:
+        if_checkbox:
+          id: collab
+          number: 1
+          is_checked: true
+      body: |
+        ### Change Location
+        - **Package Version**: {version}
+        - **Package Interface**: {package_interface}
+        - **Operating System**: {os}
+        - **Python Version**: {python_version}
+        - **Package Manager**: {package_manager}
+
+        ### Request Summary
+
+        {summary}
 
 #    - id: web_bug_frontend
 #      primary_type: web
@@ -1586,3 +1603,34 @@ forms:
 #      description: >-
 #        Report a development problem in the repository, e.g. in CI/CD workflows, .
 #      body:
+
+dev_protocol:
+  prerelease_temp_path: docs/prerelease_dev_protocols.md
+  template:
+    title: Development Process Protocol
+    body: |
+      - Issue {issue_number}
+      ## Plan
+      {issue_body}
+      
+      
+      ## Software Requirements Specification
+      TBD
+      
+      
+      ## Design Specification
+      TBD
+      
+      
+      ## Implementation
+      TBD
+      {primary_commit_summary}
+      {secondary_commits_tasklist}
+      
+      
+      ## References
+      {references}
+      
+      
+      ## Timeline
+      {timeline}
