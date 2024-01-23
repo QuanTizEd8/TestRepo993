@@ -1,0 +1,130 @@
+name: '[Callable]: RepoDynamics'
+on:
+  workflow_call:
+#    inputs:
+#      meta-sync:
+#        type: string
+#        default: report
+#        required: false
+#        description: |
+#          The action to take when the dynamic files are out of sync with the repository meta content.
+#          Selecting 'none' will disable this action.
+#      hooks:
+#        type: string
+#        default: report
+#        required: false
+#        description: |
+#          The action to take when running the workflow hooks.
+#          Selecting 'none' will disable this action.
+#      package-build:
+#        type: boolean
+#        required: false
+#        default: false
+#        description: |
+#          Build the package and upload the builds as artifacts.
+#      package-lint:
+#        type: boolean
+#        required: false
+#        default: false
+#        description: |
+#          Run the linting workflow.
+#      package-test:
+#        type: boolean
+#        required: false
+#        default: false
+#        description: |
+#          Run the test workflow on package.
+#      website-build:
+#        type: boolean
+#        required: false
+#        default: false
+#        description: |
+#          Build the documentation with Sphinx and upload the builds as artifacts.
+#      first-major-release:
+#        type: boolean
+#        required: false
+#        default: false
+#        description: |
+#          Release the current 0.X.Y version as the first major release.
+    secrets:
+      repo-admin-token:
+        description: 'Token with admin permissions to the repository.'
+        required: false
+    outputs:
+      run:
+        value: ${{ jobs.init.outputs.run }}
+        description: Whether to run subsequent jobs.
+      website:
+        value: ${{ jobs.init.outputs.website }}
+        description: Configurations for website job.
+      lint:
+        value: ${{ jobs.init.outputs.lint }}
+        description: Configurations for lint job.
+      test:
+        value: ${{ jobs.init.outputs.test }}
+        description: Configurations for test job.
+      build:
+        value: ${{ jobs.init.outputs.build }}
+        description: Configurations for build job.
+      publish-testpypi:
+        value: ${{ jobs.init.outputs.publish-testpypi }}
+        description: Configurations for publish-testpypi job.
+      test-testpypi:
+        value: ${{ jobs.init.outputs.test-testpypi }}
+        description: Configurations for test-testpypi job.
+      publish-pypi:
+        value: ${{ jobs.init.outputs.publish-pypi }}
+        description: Configurations for publish-pypi job.
+      test-pypi:
+        value: ${{ jobs.init.outputs.test-pypi }}
+        description: Configurations for test-pypi job.
+      finalize:
+        value: ${{ jobs.init.outputs.finalize }}
+        description: Configurations for finalize job.
+jobs:
+  init:
+    name: 'Init'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      fail: ${{ steps.init.outputs.fail }}
+      run: ${{ steps.init.outputs.run }}
+      website: ${{ steps.init.outputs.website }}
+      lint: ${{ steps.init.outputs.lint }}
+      test: ${{ steps.init.outputs.test }}
+      build: ${{ steps.init.outputs.build }}
+      publish-testpypi: ${{ steps.init.outputs.publish-testpypi }}
+      test-testpypi: ${{ steps.init.outputs.test-testpypi }}
+      publish-pypi: ${{ steps.init.outputs.publish-pypi }}
+      test-pypi: ${{ steps.init.outputs.test-pypi }}
+      finalize: ${{ steps.init.outputs.finalize }}
+    steps:
+      - id: init
+        uses: repodynamics/init@v1
+        with:
+          template: PyPackIT
+          admin-token: ${{ secrets.repo-admin-token }}
+#          package-build: ${{ inputs.package-build }}
+#          package-lint: ${{ inputs.package-lint }}
+#          package-test: ${{ inputs.package-test }}
+#          website-build: ${{ inputs.website-build }}
+#          meta-sync: ${{ inputs.meta-sync }}
+#          hooks: ${{ inputs.hooks }}
+#          first-major-release: ${{ inputs.first-major-release }}
+  init-fail:
+    name: 'Status'
+    runs-on: ubuntu-latest
+    needs: init
+    steps:
+      - run: |
+          echo "${{ needs.init.outputs.fail }}"
+          echo "${{ needs.init.outputs.run }}"
+      - run: |
+          if [ "${{ needs.init.outputs.fail }}" = "true" ]; then
+            exit 1
+          else
+            exit 0
+          fi
