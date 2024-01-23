@@ -24,7 +24,7 @@
 #          Description of the keynote.
 
 name: ""
-tagline: Replace This Text With Your Project's Tagline, Slogan, Or Short Description
+tagline: Replace This Text With Your Project's Tagline, Slogan, Or Short Desc
 description: >-
   Replace this text with a short summary of ${{ name }}, describing its purpose and main features.
   By default, this text is displayed on the repository's main README file,
